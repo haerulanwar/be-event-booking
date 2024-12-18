@@ -18,6 +18,13 @@ $ go run main.go
 ```
 Now server is running at port 8080.
 
+### User can be used
+currently there are 2 HR and 2 vendor users. below are credential can be used:
+1. username: `HR1` password: `password`
+2. username: `HR2` password: `password`
+3. username: `Vendor1` password: `password`
+4. username: `Vendor2` password: `password`
+
 ## Swagger
 
 Access swagger `http://localhost:8080/swagger`
