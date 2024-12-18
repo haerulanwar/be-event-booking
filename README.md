@@ -18,6 +18,14 @@ $ go run main.go
 ```
 Now server is running at port 8080.
 
+## Run on docker
+
+```bash
+# docker
+$ docker compose up --build
+```
+you can run on [http://localhost:8080](http://localhost:8080)
+
 ### User can be used
 currently there are 2 HR and 2 vendor users. below are credential can be used:
 1. username: `HR1` password: `password`
@@ -27,7 +35,7 @@ currently there are 2 HR and 2 vendor users. below are credential can be used:
 
 ## Swagger
 
-Access swagger `http://localhost:8080/swagger`
+Access swagger [http://localhost:8080/swagger](http://localhost:8080/swagger)
 
 ## ERD
 
