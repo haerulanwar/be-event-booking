@@ -1,0 +1,180 @@
+basePath: /
+definitions:
+  models.Event:
+    properties:
+      companyName:
+        type: string
+      confirmedDate:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: integer
+      eventName:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      proposedDates:
+        description: Comma-separated
+        type: string
+      remarks:
+        type: string
+      status:
+        description: Pending, Approved, Rejected
+        type: string
+      vendorID:
+        type: integer
+    type: object
+  request.ApproveEventRequest:
+    properties:
+      confirmed_date:
+        type: string
+    type: object
+  request.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  request.RejectEventRequest:
+    properties:
+      remarks:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /api/events:
+    get:
+      description: Fetch events based on user role (HR or Vendor)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+      security:
+      - Bearer: []
+      summary: Get Events
+      tags:
+      - Event
+  /api/events/{id}/approve:
+    post:
+      consumes:
+      - application/json
+      description: Approve an event and set a confirmed date
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Confirmed date
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.ApproveEventRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Approve Event
+      tags:
+      - Event
+  /api/events/{id}/reject:
+    post:
+      consumes:
+      - application/json
+      description: Reject an event with remarks
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Remarks
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RejectEventRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Reject Event
+      tags:
+      - Event
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: User login endpoint for HR and Vendor
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login
+      tags:
+      - Authentication
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
