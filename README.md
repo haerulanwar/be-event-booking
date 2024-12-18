@@ -18,6 +18,10 @@ $ go run main.go
 ```
 Now server is running at port 8080.
 
-### Swagger
+## Swagger
 
 Access swagger `http://localhost:8080/swagger`
+
+## ERD
+
+please read the ERD `ERD.pdf`
