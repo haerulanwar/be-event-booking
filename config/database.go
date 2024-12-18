@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
@@ -62,4 +63,25 @@ func SeedUsers() {
 		}
 	}
 	log.Println("Users table seeded successfully!")
+}
+
+func SeedEvents() {
+
+	proposedDate := time.Now()
+	proposedDates := fmt.Sprintf("%s,%s,%s", proposedDate.Format("2006-01-02"), proposedDate.AddDate(0, 0, 1).Format("2006-01-02"), proposedDate.AddDate(0, 0, 2).Format("2006-01-02"))
+	location := "Jl. Kyai Maja No.43, Gunung, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12120"
+	eventName := "Vacine boost"
+	events := []models.Event{
+		{CompanyName: "ABC", ProposedDates: proposedDates, Location: location, EventName: eventName, Status: constant.PENDING, VendorID: 3, CreatedBy: 1, CreatedAt: time.Now()},
+		{CompanyName: "DEF", ProposedDates: proposedDates, Location: location, EventName: eventName, Status: constant.PENDING, VendorID: 4, CreatedBy: 1, CreatedAt: time.Now()},
+		{CompanyName: "GHI", ProposedDates: proposedDates, Location: location, EventName: eventName, Status: constant.PENDING, VendorID: 3, CreatedBy: 2, CreatedAt: time.Now()},
+		{CompanyName: "JKL", ProposedDates: proposedDates, Location: location, EventName: eventName, Status: constant.PENDING, VendorID: 4, CreatedBy: 2, CreatedAt: time.Now()},
+	}
+
+	for _, event := range events {
+		if err := DB.Create(&event).Error; err != nil {
+			log.Printf("Failed to seed user %s: %v\n", event.CompanyName, err)
+		}
+	}
+	log.Println("Events table seeded successfully!")
 }

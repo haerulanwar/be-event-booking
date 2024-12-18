@@ -46,6 +46,7 @@ func main() {
 
 	// Perform database seed
 	config.SeedUsers()
+	config.SeedEvents()
 
 	// Swagger route
 	app.Get("/swagger/*", swagger.HandlerDefault)
