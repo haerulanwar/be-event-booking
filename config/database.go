@@ -43,6 +43,13 @@ func Migrate() {
 }
 
 func SeedUsers() {
+
+	var count int64
+	if DB.Model(&models.User{}).Count(&count); count > 0 {
+		log.Println("Users already seeded!")
+		return
+	}
+
 	// Hash the PIN
 	hashedPIN, err := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
 	if err != nil {
@@ -66,6 +73,12 @@ func SeedUsers() {
 }
 
 func SeedEvents() {
+
+	var count int64
+	if DB.Model(&models.Event{}).Count(&count); count > 0 {
+		log.Println("Events already seeded!")
+		return
+	}
 
 	proposedDate := time.Now()
 	proposedDates := fmt.Sprintf("%s,%s,%s", proposedDate.Format("2006-01-02"), proposedDate.AddDate(0, 0, 1).Format("2006-01-02"), proposedDate.AddDate(0, 0, 2).Format("2006-01-02"))
